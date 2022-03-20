@@ -1,0 +1,178 @@
+@charset "utf-8";
+/* CSS Document */
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+.heading {
+    font-size: 100px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 100px;
+}
+
+.box {
+    width: 800px;
+    height: 400px;
+    position: relative;
+    display: flex;
+    background: #fff;
+    border-radius: 8px;
+}
+
+.signUp, .signIn{
+    flex-shrink: 0;
+    width: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+}
+.signUp{
+    background-color: aqua;
+}
+
+.signIn{
+    background-color: aquamarine;
+}
+
+.box_move {
+    position: absolute;
+    left: 52%;
+    width: 46%;
+    top: -2px;
+    bottom: -2px;
+    background: rgba(0, 0, 0, 0.767);
+    border-radius: 10px;
+    transition: all ease-in-out 1s;
+}
+
+.box_move.active {
+    left: 2%;
+}
+
+.box_title{
+    font-size: 2rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+.box_form {
+    width: 80%;
+}
+
+.input{
+    height: 40px;
+    position: relative;
+    width: 100%;
+    border-radius: 5px;
+    margin-top: 15px;
+}
+.input_txt{
+    border: 1px solid rgb(202, 199, 199);
+    width: 100%;
+    height: 100%;
+    font-size: 1.2rem;
+    color: #000000;
+}
+
+.input_txt:focus{
+    border: 1px solid rgb(228, 234, 241);
+}
+
+.label{
+    font-size: 16px;
+    position: absolute;
+    width: fit-content;
+    color: #666;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-150%);
+    user-select: none;
+    pointer-events: none;
+    transition: all ease-in 0.5 s;
+    padding: 0 2px;
+    margin-top: 20px;
+}
+
+
+.input_txt:focus + .label, 
+.input_txt:not(:placeholder-shown) + .label{
+    top:0;
+    background: rgba(255, 255, 255, 0.815);
+}
+
+.input-group__submit {
+    margin: 0 auto;
+    margin-top: 12px;
+    background: rgb(230, 228, 243);
+}
+
+.input-group__submit:hover {
+    cursor: pointer;
+    background: rgb(174, 162, 247);
+}
+
+.foot{
+    font-size: 1.5rem;
+    font-style: italic;
+}
+.foot:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.btn {
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    width: fit-content;
+    min-width: 60px;
+    text-align: center;
+    font-size: 2rem;
+    transition: all ease 0.25s;
+    margin-top: 10px;
+    margin-left: 30%;
+    background-color: rgb(179, 0, 179);
+}
+.btn:hover{
+    cursor: pointer;
+}
+
+@media (max-width: 740px) {
+    .box__move {
+        display: none !important;
+    }
+
+    .box {
+        margin: 0 auto;
+        width: 350px;
+        overflow: hidden;
+    }
+
+    .signIn, .signUp {
+        transition: all linear 1s;
+    }
+
+    .signUp.active {
+        transform: translateX(-100%);
+    }
+
+    .signIn.active {
+        transform: translateX(-100%);
+    }
+}
+
+@media (max-width: 480px) {
+    .heading {
+        font-size: 4rem;
+        margin-bottom: 20px;
+    }
+}
+

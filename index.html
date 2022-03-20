@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Contest MPC</title>
+        <link rel="stylesheet" href="CSS/style1.css">
+        <link rel="stylesheet" href="CSS/style2.css">
+    </head>
+    <body>
+        <div class="app grid">
+            <div id="toast"></div>
+            <div class="heading">
+                CONTEST MPC
+            </div>
+            <div class="box">
+                <div class="signUp active">
+                    <div class="box_title">
+                        Sign Up
+                    </div>
+                    <div class="box_form">
+                        <div class="input">
+                          <input autocomplete="off" type="text" id="username" placeholder=" " class="input_txt">
+                          <label class="label" for="username">
+                              Username
+                          </label>
+                        </div>
+
+                        <div class="input">
+                            <input type="password" id="password" placeholder=" " class="input_txt">
+                                
+                            
+                            <label class="label" for="password">
+                                Password
+                            </label>
+                        </div>
+
+                        <div class="input">
+                            <input type="password" id="confirmPass" placeholder=" " class="input_txt">
+                                
+                            
+                            <label class="label" for="confirmPass">
+                                Confirm Password
+                            </label>
+                        </div>
+
+                        <input type="button" class="btn" onclick="signUpBtn()" value="Sign Up">
+
+                    </div>
+                    <div class="foot sign-up">
+                        Already have an account? 
+                    </div>
+                </div>
+                <div class="signIn active">
+                    <div class="box_title">
+                        Sign In
+                    </div>
+                    <div class="box__form">
+                        <div class="input">
+                            <input autocomplete="off" type="text" id="username2" placeholder=" " class="input_txt">
+
+                            
+                            <label class="label" for="username2">
+                                Username
+                            </label>
+                        </div>
+
+                        <div class="input">
+                            <input type="password" id="password2" placeholder =" " class="input_txt">
+                                
+                            
+                            <label class="label" for="password2">
+                                Password
+                            </label>
+                        </div>
+
+                        <input type="button" class="btn" onclick="signInBtn()" value="Sign In">
+                    </div>
+                    <div class="foot sign-in">
+                        Create a new account? 
+                    </div>
+                </div>
+                <div class="box_move active">
+
+                </div>
+            </div>
+        </div>
+        <script src="JS/Javascript.js"></script>
+        <script>
+            const boxMove   = document.querySelector(".box_move")
+            const signUp = document.querySelector(".signUp")
+            const signIn = document.querySelector(".signIn")
+            const redirectSignUp = document.querySelector(".foot.sign-up")
+            const redirectSignIn = document.querySelector(".foot.sign-in")            
+
+            const usersArr = [
+                {
+                    id: 1,
+                    username: "quoc",
+                    password: "123",
+                    isOnline: false,
+                    liked: [1],
+                },
+                {
+                    id: 2,
+                    username: "vinh",
+                    password: "123",
+                    isOnline: false,
+                    liked: [2],
+                },
+            ]
+
+            const users = JSON.parse(localStorage.getItem("users")) || usersArr
+
+            redirectSignUp.onclick = () => {
+                boxMove.classList.add("active")
+                signUp.classList.add("active")
+                signIn.classList.add("active")
+            }
+
+            redirectSignIn.onclick = () => {
+                boxMove.classList.remove("active")
+                signUp.classList.remove("active")
+                signIn.classList.remove("active")
+            }
+            
+            function signUpBtn(){
+                const username = document.querySelector(".input_txt#username").value
+                const pass = document.querySelector(".input_txt#password").value
+                const confirmPass = document.querySelector(".input_txt#confirmPass").value
+                if (!username || !pass || !confirmPass) {
+                    toast({
+                    title: "Error!",
+                    message: "Please enter all fields!",
+                    type: "error",
+                    duration: 3000
+                    });
+                }
+                if (username && pass && confirmPass) {
+                    const user = users.find(user => user.username === username.trim())
+
+                    if (user) {
+                        toast({
+                            title: "Error!",
+                            message: "Username already exists!",
+                            type: "error",
+                            duration: 3000
+                        });
+                        username.focus()
+                    }
+
+                    if (!user) {
+                        const confirm = pass.trim() === confirmPass.trim()
+                        if (!confirm) {
+                            toast({
+                                title: "Error!",
+                                message: "Confirm password not match!",
+                                type: "error",
+                                duration: 3000
+                            });
+                            confirmPass.focus()
+                        }
+
+                        if (confirm) {
+                            const obj = {
+                                id: users.length + 1,
+                                username: username,
+                                password: pass,
+                                isOnline: false,
+                                liked: [],
+                            }
+                            users.push(obj)
+                            localStorage.setItem("users", JSON.stringify(users))
+                            username.value = pass.value = confirmPass.value = null
+                            redirectSignUp.click()
+                        }
+                    }
+                }
+            }
+            function signInBtn(){
+                const username = document.querySelector(".input_txt#username2").value.trim()
+                const pass = document.querySelector(".input_txt#password2").value.trim()
+
+                if (!username || !pass) {
+                    toast({
+                        title: "Error!",
+                        message: "Please enter all fields!",
+                        type: "error",
+                        duration: 3000
+                    });
+                }
+
+                if (username && pass) {
+                    const user = users.find(user => user.username === username)
+                if (!user) {
+                    toast({
+                        title: "Error!",
+                        message: "Username not exists!",
+                        type: "error",
+                        duration: 3000
+                    });
+                    usernameSignIn.focus();
+                }
+                if (user) {
+                    const pw = user.password === pass
+                    if (!pw) {
+                            toast({
+                            title: "Error!",
+                            message: "Password not match!",
+                            type: "error",
+                            duration: 3000
+                        });
+                        pwSignIn.focus()
+                    }
+                    if (pw) {
+                        users.forEach(user => {
+                            user.isOnline = false
+                        })
+                        users[user.id - 1].isOnline = true
+                        localStorage.setItem("users", JSON.stringify(users))
+                        window.location.href="./home.html"
+                    }
+                }
+                }
+            }
+        </script>       
+    
+
+</body></html>
